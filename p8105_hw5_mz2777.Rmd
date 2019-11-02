@@ -1,0 +1,40 @@
+---
+title: "Homework 5"
+author: "Mengyu Zhang"
+date: "11/1/2019"
+output: github_document
+---
+# Problem 1
+Write a function that takes a vector as an argument; replaces missing values using the rules defined above; and returns the resulting vector. Apply this function to the columns of `iris_with_missing` using a `map` statement.
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+set.seed(10)
+
+iris_with_missing = iris %>% 
+  map_df(~replace(.x, sample(1:150, 20), NA)) %>%
+  mutate(Species = as.character(Species))
+```
+
+```{r}
+replace = function(x) {
+  
+  if(is.numeric(x)) {
+    x = ifelse(is.na(x), mean(x, na.rm = TRUE), x)
+  }
+  else {
+    x = ifelse(is.na(x), "virginica", x)
+  }
+  x
+}
+# map_df
+replace_value_df= map_df(iris_with_missing, replace)
+# map
+replace_value_list = map(iris_with_missing, replace)
+```
+
+# Problem 2
+```{r}
+
+```
+
